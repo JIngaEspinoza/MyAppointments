@@ -8,6 +8,8 @@ import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_create_appointment.*
 import kotlinx.android.synthetic.main.card_view_step_one.*
 import kotlinx.android.synthetic.main.card_view_step_two.*
 import kotlinx.android.synthetic.main.card_view_step_three.*
@@ -33,9 +35,20 @@ class CreateAppointmentActivity : AppCompatActivity() {
         }
 
         btnNext2.setOnClickListener{
-            showAppointmentDataToConfirm()
-            cvStep2.visibility = View.GONE
-            cvStep3.visibility = View.VISIBLE
+            when {
+                etScheduledDate.text.toString().isEmpty() -> {
+                    etScheduledDate.error = getString(R.string.validate_appointment_date)
+                }
+                selectedRadioButton == null -> {
+                    Snackbar.make(createAppointmentLinearLayout,R.string.validate_appointment_time, Snackbar.LENGTH_SHORT).show()
+                }
+                else -> {
+                    showAppointmentDataToConfirm()
+                    cvStep2.visibility = View.GONE
+                    cvStep3.visibility = View.VISIBLE
+                }
+            }
+
         }
 
 
@@ -82,6 +95,7 @@ class CreateAppointmentActivity : AppCompatActivity() {
                     d.twoDigits()
                 )
             )
+            etScheduledDate.error = null
             displayRadioButtons()
         }
         //Aca se crea el dialog de la fecha
