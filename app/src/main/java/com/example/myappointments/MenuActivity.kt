@@ -41,5 +41,5 @@ class MenuActivity : AppCompatActivity() {
     }
 
 
-    //fun onClickScheduledDate(view: View) {}
+    fun onClickScheduledDate(view: View) {}
 }
